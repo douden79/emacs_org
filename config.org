@@ -13,8 +13,11 @@
 :config (load-theme 'darkokai t)
 (setq darkokai-mode-line-padding 1))
 #+end_src
-* Gui
-** hlinum
+
+* General
+** Editor
+*** clipboard
+*** hlinum
 #+begin_src emacs-lisp
 (use-package hlinum
 :ensure t
@@ -38,7 +41,6 @@ text-scale-mode-amount) 1)
 (global-hl-line-mode +1)
 (setq linum-format "%-4d"))
 #+end_src
-
 ** cursor
 #+begin_src emacs-lisp
 (set-cursor-color "SkyBlue2")
@@ -51,106 +53,6 @@ text-scale-mode-amount) 1)
 (global-set-key (kbd "<f3>") 'highlight-symbol-at-point)
 (global-set-key (kbd "<f4>") 'highlight-symbol-remove-all))
 #+end_src
-** tabbar-ruler
-   #+begin_src emacs-lisp
-(use-package tabbar-ruler
-:ensure t
-:init (tabbar-mode 1)
-(setq tabbar-buffer-groups-function nil)
-
-;; dolist button
-(dolist (btn '(tabbar-buffer-home-button
-               tabbar-scroll-left-button
-               tabbar-scroll-right-button))
-               (set btn (cons (cons "" nil)
-                             (cons "" nil))))
-
-;; separator
-(setq tabbar-separator '(2.2))
-
-;; tabbar attribute color and ui
-(set-face-attribute
- 'tabbar-default nil
- :family "Envy Code R VS"
- :background "#34495E"
- :foreground "#EEEEEE"
- :height 0.95
- )
-(set-face-attribute
- 'tabbar-unselected nil
- :background "#34495E"
- :foreground "#EEEEEE"
- :box nil
-)
-(set-face-attribute
- 'tabbar-modified nil
- :background "#E67E22"
- :foreground "#EEEEEE"
- :box nil
-)
-(set-face-attribute
- 'tabbar-selected nil
- :background "#E74C3C"
- :foreground "#EEEEEE"
- :box nil)
-(set-face-attribute
- 'tabbar-button nil
- :box nil)
-(set-face-attribute
- 'tabbar-separator nil
- :height 1.5)
-
-;; tabbar display buffers-menu-buffer-name-length
-(defvar tabbar-displayed-buffers
-  '("*scratch*" "*Messages*" "*Backtrace*" "*Colors*" "*Faces*" "*vc-")
-  "*Regexps matches buffer names always included tabs.")
-
-;; tabbar displayed buffers
-(defvar tabbar-displayed-buffers
-  '("*scratch*" "*Messages*" "*Backtrace*" "*Colors*" "*Faces*" "*vc-")
-  "*Regexps matches buffer names always included tabs.")
-
-(defun tabbar-buffer-list ()
-  "Return the list of buffers to show in tabs.
-Exclude buffers whose name starts with a space or an asterisk.
-The current buffer and buffers matches `tabbar-displayed-buffers'
-are always included."
-  (let* ((hides (list ?\  ?\*))
-         (re (regexp-opt tabbar-displayed-buffers))
-         (cur-buf (current-buffer))
-         (tabs (delq nil
-                     (mapcar (lambda (buf)
-                               (let ((name (buffer-name buf)))
-                                 (when (or (string-match re name)
-                                           (not (memq (aref name 0) hides)))
-                                   buf)))
-                             (buffer-list)))))
-    ;; Always include the current buffer.
-    (if (memq cur-buf tabs)
-        tabs
-      (cons cur-buf tabs))))
-
-(setq tabbar-buffer-list-function 'tabbar-buffer-list)
-
-;; Ctrl-Tab, Ctrl-Shift-Tab 
-(dolist (func '(tabbar-mode tabbar-forward-tab tabbar-forward-group tabbar-backward-tab tabbar-backward-group))
-  (autoload func "tabbar" "Tabs at the top of buffers and easy control-tab navigation"))
-(defmacro defun-prefix-alt (name on-no-prefix on-prefix &optional do-always)
-  `(defun ,name (arg)
-     (interactive "P")
-     ,do-always
-     (if (equal nil arg)
-         ,on-no-prefix
-       ,on-prefix))))
-#+end_src
-*** powerline-evil
-Better than emacs status bar.
-#+begin_src emacs-lisp
-(use-package powerline-evil
-:ensure t
-:init (setq powerline-evil-vim-theme t))
-#+end_src
-* General
 ** editor
 *** smex
 #+begin_src emacs-lisp
@@ -250,17 +152,26 @@ Description:
 ("C-3" . bm-previous)))
 #+end_src
 
-** directory
-*** dired+
+*** tabbar
 #+begin_src emacs-lisp
-(use-package dired+
-:ensure t
-:init (setq dired-dwim-target t))
+(use-package tabbar
+:ensure t)
+#+end_src
+** directory
+*** dired
+#+begin_src emacs-lisp
+(setq dired-dwim-target t)
+#+end_src
+** Ide
+#+begin_src emacs-lisp
+(use-package ecb
+:ensure t)
 #+end_src
 * org-mode
 ** org-bullets
 #+begin_src emacs-lisp
 (use-package org-bullets
+:ensure t
 :init (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
 * Scm
@@ -273,17 +184,6 @@ Description:
 	("C-x p" . magit-pull)))
 #+end_src
 * Helm
-*** helm-config
-#+begin_src emacs-lisp
-(use-package helm-config
-  :init
-  (custom-set-variables '(helm-command-prefix-key "C-;"))
-  :config
-  (bind-keys :map helm-command-map
-             ("a" . helm-ag)
-             ("o" . helm-occur)
-             ("y" . yas-insert-snippet)))
-#+end_src
 *** helm-gtags
 #+begin_src emacs-lisp
 (use-package helm
@@ -357,5 +257,4 @@ Description:
 *** first init config
 #+begin_src emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
-(add-hook 'after-init-hook 'global-company-mode)
 #+end_src
