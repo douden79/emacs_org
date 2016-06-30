@@ -166,6 +166,11 @@ Description:
 #+begin_src emacs-lisp
 (use-package ecb
 :ensure t)
+:init (setq ecb-layout-name "top1")
+(setq ecb-examples-bufferinfo-buffer-name nil)
+(setq stack-trace-on-error t)
+(setq ecb-version-check nil)
+(setq ecb-compile-window-height 12)
 #+end_src
 * org-mode
 ** org-bullets
@@ -258,3 +263,35 @@ Description:
 #+begin_src emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
+*** syntax
+#+begin_src emacs-lisp
+(defun linux-c-indent ()
+  "adjusted defaults for C/C++ mode use with the Linux kernel."
+  (interactive)
+  (setq tab-width 8)
+  ;;force spaces, to work with dumber editors
+  (setq indent-tabs-mode nil) 
+  (setq c-basic-offset 8))
+
+(add-hook 'c-mode-hook 'linux-c-indent)
+(add-hook 'c-mode-hook (lambda() (c-set-style "K&R")))
+(add-hook 'c++-mode-hook 'linux-c-indent)
+
+(global-semantic-idle-scheduler-mode t)
+(global-semanticdb-minor-mode t)
+(global-semantic-idle-summary-mode t)
+(global-semantic-idle-completions-mode t)
+(global-semantic-highlight-func-mode t)
+(global-semantic-decoration-mode t)
+(global-semantic-stickyfunc-mode t)
+(global-semantic-mru-bookmark-mode t)
+#+end_src
+
+    global-semantic-idle-scheduler-mode (see Idle Scheduler).
+    global-semanticdb-minor-mode (see SemanticDB).
+    global-semantic-idle-summary-mode (see Idle Summary Mode).
+    global-semantic-idle-completions-mode (see Idle Completions Mode).
+    global-semantic-highlight-func-mode (see Highlight Func Mode).
+    global-semantic-decoration-mode (see Tag Decoration Mode).
+    global-semantic-stickyfunc-mode (see Sticky Func Mode).
+    global-semantic-mru-bookmark-mode (see MRU Bookmarks). 
