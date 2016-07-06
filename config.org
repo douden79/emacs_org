@@ -262,6 +262,8 @@ Description:
 *** first init config
 #+begin_src emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
+(modify-coding-system-alist 'file "\\.*\\'" 'utf-8)
+(setq coding-system-for-read 'utf-8)
 #+end_src
 *** syntax
 #+begin_src emacs-lisp
