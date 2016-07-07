@@ -48,6 +48,7 @@
  '(helm-command-prefix-key "C-;")
  '(tool-bar-mode nil)
  '(vlf-application (quote dont-ask)))
+'(prefer-coding-system (quote utf-8))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
