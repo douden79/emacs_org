@@ -40,6 +40,8 @@ text-scale-mode-amount) 1)
 :config
 (global-hl-line-mode +1)
 (setq linum-format "%-4d"))
+(column-number-mode t)
+(size-indication-mode t)
 #+end_src
 ** cursor
 #+begin_src emacs-lisp
@@ -247,6 +249,13 @@ Description:
          ("C-h h" . helm-descbinds)))
 #+end_src
 * Default
+** GUI
+*** beacon
+#+begin_src emacs-lisp
+(use-package beacon
+:ensure t
+:init (beacon-mode 1))
+#+end_src
 *** font and language
 #+begin_src emacs-lisp
 (set-fontset-font "fontset-default" '(#x1100 . #xffdc)
@@ -264,6 +273,9 @@ Description:
 (fset 'yes-or-no-p 'y-or-n-p)
 (modify-coding-system-alist 'file "\\.*\\'" 'utf-8)
 (setq coding-system-for-read 'utf-8)
+(setq-default
+ whitespace-line-column 80
+ whitespace-style       '(face lines-tail))
 #+end_src
 *** syntax
 #+begin_src emacs-lisp
@@ -288,12 +300,3 @@ Description:
 (global-semantic-stickyfunc-mode t)
 (global-semantic-mru-bookmark-mode t)
 #+end_src
-
-    global-semantic-idle-scheduler-mode (see Idle Scheduler).
-    global-semanticdb-minor-mode (see SemanticDB).
-    global-semantic-idle-summary-mode (see Idle Summary Mode).
-    global-semantic-idle-completions-mode (see Idle Completions Mode).
-    global-semantic-highlight-func-mode (see Highlight Func Mode).
-    global-semantic-decoration-mode (see Tag Decoration Mode).
-    global-semantic-stickyfunc-mode (see Sticky Func Mode).
-    global-semantic-mru-bookmark-mode (see MRU Bookmarks). 
