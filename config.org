@@ -270,6 +270,9 @@ Description:
 #+end_src
 *** syntax
 #+begin_src emacs-lisp
+(use-package c-eldoc
+:ensure t
+:config (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode))
 (defun linux-c-indent ()
   "adjusted defaults for C/C++ mode use with the Linux kernel."
   (interactive)
@@ -290,6 +293,10 @@ Description:
 (global-semantic-decoration-mode t)
 (global-semantic-stickyfunc-mode t)
 (global-semantic-mru-bookmark-mode t)
+(setq-default semantic-symref-tool "global")
+
+(semanticdb-enable-gnu-global-databases 'c++-mode)
+(semanticdb-enable-gnu-global-databases 'c-mode)
 #+end_src
 *** highlight parense
 #+begin_src emacs-lisp
@@ -300,4 +307,10 @@ Description:
 (set-face-foreground 'show-paren-match-face "#36648b")
 (set-face-attribute 'show-paren-match-face nil
 :weight 'bold :underline nil :overline nil :slant 'normal)
+#+end_src
+*** flycheck
+#+begin_src emacs-lisp
+(use-package flycheck
+:ensure t
+:init (global-flycheck-mode))
 #+end_src
