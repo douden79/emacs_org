@@ -95,28 +95,8 @@ sublimity-scroll-drift-length 2)
 (use-package multiple-cursors
 :ensure t
 :bind (("C-l" . mc/edit-lines)
-("C-;" . mc/mark-all-words-like-this)
-("C->" . mc/mark-next-like-this)
-("C-<" . mc/mark-previous-like-this)
-("C-c C-<" . mc/mark-all-like-this)
-("C-!" . mc/mark-next-symbol-like-this)
-("s-d" . mc/mark-all-dwim)))
+("C-;" . mc/mark-all-words-like-this)))
 #+end_src
-*** projectile
-#+begin_src emacs-lisp
-(use-package projectile
-:ensure t
-:diminish projectile-mode
-:commands projectile-mode
-:config
-(progn
-(projectile-global-mode t)
-(setq projectile-enable-caching t)
-(use-package ag
-:command ag
-:ensure t)))
-#+end_src
-
 *** function-args
 #+begin_src emacs-lisp
 (use-package function-args
@@ -248,6 +228,17 @@ Description:
   :bind (("C-h b" . helm-descbinds)
          ("C-h h" . helm-descbinds)))
 #+end_src
+*** helm-projectile
+#+begin_src emacs-lisp
+(use-package helm-projectile
+:ensure t
+:config (helm-projectile-on))
+(setq projectile-enable-caching t)
+(setq projectile-switch-project-action 'projectile-dired)
+(setq projectile-remember-window-configs t)
+(setq projectile-completion-system 'helm)
+(setq projectile-switch-project-action 'helm-projectile)
+#+end_src
 * Default
 ** GUI
 *** beacon
@@ -299,4 +290,14 @@ Description:
 (global-semantic-decoration-mode t)
 (global-semantic-stickyfunc-mode t)
 (global-semantic-mru-bookmark-mode t)
+#+end_src
+*** highlight parense
+#+begin_src emacs-lisp
+(setq show-paren-delay 0)
+(show-paren-mode t)
+(setq show-paren-style 'expression)
+(set-face-background 'show-paren-match-face "#ffffff")
+(set-face-foreground 'show-paren-match-face "#36648b")
+(set-face-attribute 'show-paren-match-face nil
+:weight 'bold :underline nil :overline nil :slant 'normal)
 #+end_src
