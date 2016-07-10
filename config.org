@@ -115,7 +115,10 @@ sublimity-scroll-drift-length 2)
 *** dokuwiki
 #+begin_src emacs-lisp
 (use-package dokuwiki-mode
-:ensure t)
+:ensure t
+:config (setq dokuwiki-username "knuth"
+dokuwiki-password "genius120978"
+dokuwiki-base-url "211.108.117.150/dokuwiki"))
 #+end_src
 *** bm
 Description:
@@ -313,4 +316,10 @@ Description:
 (use-package flycheck
 :ensure t
 :init (global-flycheck-mode))
+#+end_src
+** better defaults and ido-mode
+#+begin_src emacs-lisp
+(use-package better-defaults
+:ensure t
+:init (ido-mode t))
 #+end_src
