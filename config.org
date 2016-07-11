@@ -319,6 +319,14 @@ Description:
 :ensure t
 :init (global-flycheck-mode))
 #+end_src
+*** rainbow-delimiters
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+:ensure t
+:init (add-hook 'c-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'c++-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'makefile-mode-hook #'rainbow-delimiters-mode))
+#+end_src
 ** better defaults and ido-mode
 #+begin_src emacs-lisp
 (use-package better-defaults
