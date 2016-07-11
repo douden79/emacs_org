@@ -1,3 +1,4 @@
+
 * Theme
 ** monokai-theme
 #+begin_src emacs-lisp
@@ -209,8 +210,8 @@ Description:
   :commands (helm-gtags-mode helm-gtags-dwim)
   :diminish "HGt"
   :bind	(("M-t" . helm-gtags-pop-stack)
-	("M-]" . helm-gtags-find-tags)
-	("M-[" . helm-gtags-find-rtags)
+	("M-]" . helm-gtags-find-tag)
+	("M-[" . helm-gtags-find-rtag)
 	("M-." . helm-gtags-dwim)
 	("M-," . helm-gtags-tags-in-this-function)
 	("C-j" . helm-gtags-select)
