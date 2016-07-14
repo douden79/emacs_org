@@ -1,4 +1,5 @@
-
+- Today's packages.
+  - c-eldoc
 * Theme
 ** monokai-theme
 #+begin_src emacs-lisp
@@ -86,9 +87,13 @@ sublimity-scroll-drift-length 2)
 :ensure t
 :defer t
 :diminish yas-minor-mode
-:config (setq yas-snippet-dirs (concat user-emacs-directory "snippets"))
-(yas-global-mode)
+:mode ("/\\.emacs\\.d/snippets/" . snippet-mode)
+:init
+(progn
+(setq yas-verbosity 3)
+(yas-global-mode 1))
 (add-hook 'term-mode-hook (lambda() setq yas-dont-activate t)))
+
 #+end_src
     
 *** Multiple cursors
@@ -96,7 +101,7 @@ sublimity-scroll-drift-length 2)
 (use-package multiple-cursors
 :ensure t
 :bind (("C-l" . mc/edit-lines)
-("C-;" . mc/mark-all-words-like-this)))
+("C-;" . mc/mark-all-like-this)))
 #+end_src
 *** function-args
 #+begin_src emacs-lisp
@@ -300,7 +305,16 @@ Description:
 #+begin_src emacs-lisp
 (use-package c-eldoc
 :ensure t
-:config (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode))
+:config (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
+:init (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
+(add-hook 'c++-mode-hook 'c-turn-on-eldoc-mode)
+(setq c-eldoc-buffer-regenerate-time 60)
+(defun c-eldoc-define-keybindings (map)
+(define-key map (kbd "C-c d") 'c-eldoc-force-cache-update))
+(add-hook 'c-mode-hook
+(lambda ()
+(c-eldoc-define-keybindings c-mode-map))))
+
 (defun linux-c-indent ()
   "adjusted defaults for C/C++ mode use with the Linux kernel."
   (interactive)
