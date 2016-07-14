@@ -165,6 +165,27 @@ Description:
 :ensure t
 :init (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
+** task management
+#+begin_src emacs-lisp
+(setq org-todo-keywords
+ '((sequence
+    "TODO(t)"  ; next action
+    "TOBLOG(b)"  ; next action
+    "STARTED(s)"
+    "WAITING(w@/!)"
+    "SOMEDAY(.)" "|" "DONE(x!)" "CANCELLED(c@)")
+   (sequence "LEARN" "TRY" "TEACH" "|" "COMPLETE(x)")
+   (sequence "TOSKETCH" "SKETCHED" "|" "POSTED")
+   (sequence "TOBUY" "TOSHRINK" "TOCUT"  "TOSEW" "|" "DONE(x)")
+   (sequence "TODELEGATE(-)" "DELEGATED(d)" "|" "COMPLETE(x)")))
+(setq org-todo-keyword-faces
+      '(("TODO" . (:foreground "green" :weight bold))
+        ("DONE" . (:foreground "cyan" :weight bold))
+        ("WAITING" . (:foreground "red" :weight bold))
+        ("SOMEDAY" . (:foreground "gray" :weight bold))))
+(setq org-log-done 'time)
+#+end_src
+
 * Scm
 ** magit
 #+begin_src emacs-lisp
@@ -237,12 +258,14 @@ Description:
 #+begin_src emacs-lisp
 (use-package helm-projectile
 :ensure t
-:config (helm-projectile-on))
-(setq projectile-enable-caching t)
+:bind (("C-p" . helm-projectile))
+:config (helm-projectile-on)
+:init (setq projectile-enable-caching t)
 (setq projectile-switch-project-action 'projectile-dired)
 (setq projectile-remember-window-configs t)
 (setq projectile-completion-system 'helm)
 (setq projectile-switch-project-action 'helm-projectile)
+(projectile-global-mode))
 #+end_src
 * Default
 ** GUI
@@ -327,11 +350,11 @@ Description:
 (add-hook 'c++-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'makefile-mode-hook #'rainbow-delimiters-mode))
 #+end_src
-** better defaults and ido-mode
+*** better defaults and ido-mode
 #+begin_src emacs-lisp
 (use-package better-defaults
 :ensure t
-:init (ido-mode t))
+:init (ido-mode 0))
 #+end_src
 ** windmove
 #+begin_src emacs-lisp

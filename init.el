@@ -58,3 +58,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Envy Code R" :foundry "unknown" :full normal :weight normal :height 98 :width normal :full normal :slant normal)))))
+(put 'downcase-region 'disabled nil)
