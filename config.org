@@ -5,15 +5,21 @@
 #+begin_src emacs-lisp
 (use-package monokai-theme
 :ensure t
-:config
+:config (load-theme 'monokai t)
 (setq monokai-use-variable-pitch nil))
 #+end_src
 ** darkokai-theme
 #+begin_src emacs-lisp
-(use-package darkokai-theme
-:ensure t
-:config (load-theme 'darkokai t)
-(setq darkokai-mode-line-padding 1))
+;;(use-package darkokai-theme
+;;:ensure t
+;;:config (load-theme 'darkokai t)
+;;(setq darkokai-mode-line-padding 0))
+#+end_src
+** solarized-theme
+#+begin_src emacs-lisp
+;;(use-package solarized-theme
+;;:ensure t
+;;:config (load-theme 'solarized-light 0))
 #+end_src
 
 * General
@@ -157,7 +163,7 @@ Description:
 #+begin_src emacs-lisp
 (use-package ecb
 :ensure t)
-:init (setq ecb-layout-name "top1")
+:init (setq ecb-layout-name "right1")
 (setq ecb-examples-bufferinfo-buffer-name nil)
 (setq stack-trace-on-error t)
 (setq ecb-version-check nil)
@@ -384,4 +390,16 @@ Description:
 ("M-<left>" . windmove-left)
 ("M-<up>" . windmove-up)
 ("M-<down>" . windmove-down))
+#+end_src
+** Error
+#+begin_src emacs-lisp
+; default is 1000, reduce the backtrace level
+(setq max-specpdl-size 5) 
+; now you should get a backtrace
+(setq debug-on-error t)
+(setq large-file-warning-threshold nil) ;; etags file remove warning message
+#+end_src
+** keybinding
+#+begin_src emacs-lisp
+(global-set-key (kbd "<f2>") 'rgrep)
 #+end_src
