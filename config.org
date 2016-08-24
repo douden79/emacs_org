@@ -101,7 +101,7 @@ sublimity-scroll-drift-length 2)
 (progn
 (setq yas-verbosity 3)
 (yas-global-mode 1))
-(add-hook 'term-mode-hook (lambda() setq yas-dont-activate t))
+(add-hook 'term-mode-hook (lambda() (setq yas-dont-activate t)))
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
 (define-key yas-minor-mode-map (kbd "C-c y") 'yas-expand)
