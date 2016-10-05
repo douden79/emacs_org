@@ -3,10 +3,10 @@
 * Theme
 ** monokai-theme
 #+begin_src emacs-lisp
-(use-package monokai-theme
-:ensure t
-:config (load-theme 'monokai t)
-(setq monokai-use-variable-pitch nil))
+;;(use-package monokai-theme
+;;:ensure t
+;;:config (load-theme 'monokai 0)
+;;(setq monokai-use-variable-pitch nil))
 #+end_src
 ** darkokai-theme
 #+begin_src emacs-lisp
@@ -17,9 +17,9 @@
 #+end_src
 ** solarized-theme
 #+begin_src emacs-lisp
-;;(use-package solarized-theme
-;;:ensure t
-;;:config (load-theme 'solarized-light 0))
+(use-package solarized-theme
+:ensure t
+:config (load-theme 'solarized-dark t))
 #+end_src
 
 * General
@@ -101,7 +101,7 @@ sublimity-scroll-drift-length 2)
 (progn
 (setq yas-verbosity 3)
 (yas-global-mode 1))
-(add-hook 'term-mode-hook (lambda() setq yas-dont-activate t))
+(add-hook 'term-mode-hook (lambda() (setq yas-dont-activate t)))
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
 (define-key yas-minor-mode-map (kbd "C-c y") 'yas-expand)
@@ -179,6 +179,14 @@ Description:
 (setq stack-trace-on-error t)
 (setq ecb-version-check nil)
 (setq ecb-compile-window-height 12)
+#+end_src
+** hide show
+#+begin_src emacs-lisp
+(add-hook 'c-mode-common-hook
+  (lambda()
+    (local-set-key (kbd "C-s") 'hs-show-block)
+    (local-set-key (kbd "C-h")  'hs-hide-block)
+    (hs-minor-mode t)))
 #+end_src
 * org-mode
 ** org-bullets
@@ -413,4 +421,23 @@ Description:
 ** keybinding
 #+begin_src emacs-lisp
 (global-set-key (kbd "<f2>") 'rgrep)
+#+end_src
+** deafult init
+#+begin_src emacs-lisp
+(defun gtags-root-dir ()
+    "Returns GTAGS root directory or nil if doesn't exist."
+    (with-temp-buffer
+      (if (zerop (call-process "global" nil t nil "-pr"))
+          (buffer-substring (point-min) (1- (point-max)))
+        nil)))
+
+(defun gtags-update ()
+    "Make GTAGS incremental update"
+    (call-process "global" nil nil nil "-u"))
+
+(defun gtags-update-hook ()
+    (when (gtags-root-dir)
+      (gtags-update)))
+
+(add-hook 'after-save-hook #'gtags-update-hook)
 #+end_src
