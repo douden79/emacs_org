@@ -273,6 +273,23 @@ Description:
 (add-hook 'c++-mode-hook 'helm-gtags-mode)
 (add-hook 'asm-mode-hook 'helm-gtags-mode)
 
+(defun gtags-root-dir ()
+    "Returns GTAGS root directory or nil if doesn't exist."
+    (with-temp-buffer
+      (if (zerop (call-process "global" nil t nil "-pr"))
+          (buffer-substring (point-min) (1- (point-max)))
+        nil)))
+
+(defun gtags-update ()
+    "Make GTAGS incremental update"
+    (call-process "global" nil nil nil "-u"))
+
+(defun gtags-update-hook ()
+    (when (gtags-root-dir)
+      (gtags-update)))
+
+(add-hook 'after-save-hook #'gtags-update-hook)
+
 
 (use-package helm-swoop
   :ensure t
@@ -283,6 +300,17 @@ Description:
   :ensure t
   :bind (("C-h b" . helm-descbinds)
          ("C-h h" . helm-descbinds)))
+#+end_src
+*** helm-cscope
+#+begin_src emacs-lisp
+(use-package helm-cscope
+:ensure t
+:bind (("C-s" . helm-cscope-find-symbol)
+("C-g" . helm-cscope-find-global-definition)
+("M-c f" . helm-cscope-find-called-function)
+("M-c c" . helm-cscope-find-calling-this-function)
+("M-s" . helm-cscope-select)
+("C-p" . helm-cscope-find-egrep-pattern)))
 #+end_src
 *** helm-projectile
 #+begin_src emacs-lisp
@@ -423,21 +451,3 @@ Description:
 (global-set-key (kbd "<f2>") 'rgrep)
 #+end_src
 ** deafult init
-#+begin_src emacs-lisp
-(defun gtags-root-dir ()
-    "Returns GTAGS root directory or nil if doesn't exist."
-    (with-temp-buffer
-      (if (zerop (call-process "global" nil t nil "-pr"))
-          (buffer-substring (point-min) (1- (point-max)))
-        nil)))
-
-(defun gtags-update ()
-    "Make GTAGS incremental update"
-    (call-process "global" nil nil nil "-u"))
-
-(defun gtags-update-hook ()
-    (when (gtags-root-dir)
-      (gtags-update)))
-
-(add-hook 'after-save-hook #'gtags-update-hook)
-#+end_src
