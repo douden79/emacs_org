@@ -305,11 +305,11 @@ Description:
 #+begin_src emacs-lisp
 (use-package helm-cscope
 :ensure t
-:bind (("C-s" . helm-cscope-find-symbol)
-("C-g" . helm-cscope-find-global-definition)
+:bind (("C-c s" . helm-cscope-find-symbol)
+("C-c g" . helm-cscope-find-global-definition)
 ("C-c f" . helm-cscope-find-called-function)
 ("C-c c" . helm-cscope-find-calling-this-function)
-("C-s" . helm-cscope-select)
+("C-c c" . helm-cscope-select)
 ("C-p" . helm-cscope-find-egrep-pattern)))
 #+end_src
 *** helm-projectile
