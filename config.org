@@ -188,6 +188,12 @@ Description:
     (local-set-key (kbd "C-h")  'hs-hide-block)
     (hs-minor-mode t)))
 #+end_src
+** anything
+#+begin_src emacs-lisp
+(use-package anything
+:ensure t
+:bind (("C-b" . anything-mini)))
+#+end_src
 * org-mode
 ** org-bullets
 #+begin_src emacs-lisp
@@ -455,3 +461,21 @@ Description:
 (global-set-key (kbd "<f2>") 'rgrep)
 #+end_src
 ** deafult init
+#+begin_src emacs-lisp
+(defun gtags-root-dir ()
+    "Returns GTAGS root directory or nil if doesn't exist."
+    (with-temp-buffer
+      (if (zerop (call-process "global" nil t nil "-pr"))
+          (buffer-substring (point-min) (1- (point-max)))
+        nil)))
+
+(defun gtags-update ()
+    "Make GTAGS incremental update"
+    (call-process "global" nil nil nil "-u"))
+
+(defun gtags-update-hook ()
+    (when (gtags-root-dir)
+      (gtags-update)))
+
+(add-hook 'after-save-hook #'gtags-update-hook)
+#+end_src
