@@ -484,15 +484,16 @@ Description:
 #+end_src
 *** python elpy
 #+begin_src emacs-lisp
-;;elpy activate
-(elpy-enable)
-;; use autocomplete
-(add-hook 'python-mode-hook
-(lambda ()
-(define-key elpy-mode-map (kbd "TAB") 'elpy-company-backend)))
-
-;; disable auto complete on python-mode
-(defadvice auto-complete-mode (around disable-auto-complete-for-python)
-(unless (eq major-mode 'python-mode) ad-do-it))
-(ad-activate 'auto-complete-mode)
+;;(require 'elpy)
+;;;;elpy activate
+;;(elpy-enable)
+;;;; use autocomplete
+;;(add-hook 'python-mode-hook
+;;(lambda ()
+;;(define-key elpy-mode-map (kbd "TAB") 'elpy-company-backend)))
+;;
+;;;; disable auto complete on python-mode
+;;(defadvice auto-complete-mode (around disable-auto-complete-for-python)
+;;(unless (eq major-mode 'python-mode) ad-do-it))
+;;(ad-activate 'auto-complete-mode)
 #+end_src 
