@@ -1,5 +1,3 @@
-- Today's packages.
-  - c-eldoc
 * Theme
 ** monokai-theme
 #+begin_src emacs-lisp
@@ -316,7 +314,12 @@ Description:
 ("C-c f" . helm-cscope-find-called-function)
 ("C-c c" . helm-cscope-find-calling-this-function)
 ("C-c c" . helm-cscope-select)
-("C-p" . helm-cscope-find-egrep-pattern)))
+("C-p" . helm-cscope-find-egrep-pattern))
+:init 
+;; Enable helm-gtags-mode in code
+(add-hook 'c-mode-hook 'helm-cscope-mode)
+(add-hook 'c++-mode-hook 'helm-cscope-mode)
+(add-hook 'asm-mode-hook 'helm-cscope-mode))
 #+end_src
 *** helm-projectile
 #+begin_src emacs-lisp
@@ -451,9 +454,9 @@ Description:
 ** Error
 #+begin_src emacs-lisp
 ; default is 1000, reduce the backtrace level
-(setq max-specpdl-size 5) 
+(setq max-specpdl-size 1000) 
 ; now you should get a backtrace
-(setq debug-on-error t)
+(setq debug-on-error nil)
 (setq large-file-warning-threshold nil) ;; etags file remove warning message
 #+end_src
 ** keybinding
@@ -479,3 +482,17 @@ Description:
 
 (add-hook 'after-save-hook #'gtags-update-hook)
 #+end_src
+*** python elpy
+#+begin_src emacs-lisp
+;;elpy activate
+(elpy-enable)
+;; use autocomplete
+(add-hook 'python-mode-hook
+(lambda ()
+(define-key elpy-mode-map (kbd "TAB") 'elpy-company-backend)))
+
+;; disable auto complete on python-mode
+(defadvice auto-complete-mode (around disable-auto-complete-for-python)
+(unless (eq major-mode 'python-mode) ad-do-it))
+(ad-activate 'auto-complete-mode)
+#+end_src 
