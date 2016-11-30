@@ -182,8 +182,7 @@ Description:
 #+begin_src emacs-lisp
 (add-hook 'c-mode-common-hook
   (lambda()
-    (local-set-key (kbd "C-s") 'hs-show-block)
-    (local-set-key (kbd "C-h")  'hs-hide-block)
+    (local-set-key (kbd "C-t") 'hs-toggle-hiding)
     (hs-minor-mode t)))
 #+end_src
 ** anything
