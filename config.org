@@ -57,9 +57,8 @@ text-scale-mode-amount) 1)
 #+begin_src emacs-lisp
 (use-package highlight-symbol
 :ensure t
-:config
-(global-set-key (kbd "<f3>") 'highlight-symbol-at-point)
-(global-set-key (kbd "<f4>") 'highlight-symbol-remove-all))
+:bind (([f3] . highlight-symbol-at-point)
+	([f4] . highlight-symbol-remove-all)))
 #+end_src
 ** editor
 *** smex
@@ -163,6 +162,7 @@ Description:
 (use-package tabbar
 :ensure t)
 #+end_src
+*** hideshowvis
 ** directory
 *** dired
 #+begin_src emacs-lisp
@@ -178,12 +178,15 @@ Description:
 (setq ecb-version-check nil)
 (setq ecb-compile-window-height 12)
 #+end_src
-** hide show
+** hide show vis
 #+begin_src emacs-lisp
-(add-hook 'c-mode-common-hook
-  (lambda()
-    (local-set-key (kbd "C-t") 'hs-toggle-hiding)
-    (hs-minor-mode t)))
+(use-package hideshowvis
+:ensure t
+:bind (("C-t" . hs-toggle-hiding))
+:init (add-hook 'c-mode-hook #'hideshowvis-enable)
+(add-hook 'c++-mode-hook #'hideshowvis-enable)
+(add-hook 'c-mode-hook #'hideshowvis-symbols)
+(add-hook 'c++-mode-hook #'hideshowvis-symbols))
 #+end_src
 ** anything
 #+begin_src emacs-lisp
