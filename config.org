@@ -8,17 +8,29 @@
 #+end_src
 ** darkokai-theme
 #+begin_src emacs-lisp
-(use-package darkokai-theme
-:ensure t
-:config (load-theme 'darkokai t)
-(setq darkokai-mode-line-padding 0))
+;;(use-package darkokai-theme
+;;:ensure t
+;;:config (load-theme 'darkokai t)
+;;(setq darkokai-mode-line-padding 0))
 #+end_src
+
+** ample light
+;;(use-package ample-theme
+;;:ensure t
+;;:config (load-theme 'ample-light))
 ** solarized-theme
 #+begin_src emacs-lisp
-;;(use-package solarized-theme
-;;:ensure t
-;;:config (load-theme 'solarized-dark t))
+(use-package solarized-theme
+:ensure t
+:config (load-theme 'solarized-light t))
 #+end_src
+** alect themes
+#+begin_src emacs-lisp
+;;(use-package alect-themes
+;;:ensure t
+;;:config (load-theme 'alect-light t))
+#+end_src
+** orgarnic green theme
 
 * General
 ** Editor
@@ -197,9 +209,9 @@ Description:
 * org-mode
 ** org-bullets
 #+begin_src emacs-lisp
-(use-package org-bullets
-:ensure t
-:init (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+;;(use-package org-bullets
+;;:ensure t
+;;:init (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
 ** task management
 #+begin_src emacs-lisp
