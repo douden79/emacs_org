@@ -475,7 +475,7 @@ Description:
 #+end_src
 ** keybinding
 #+begin_src emacs-lisp
-(global-set-key (kbd "<f2>") 'rgrep)
+(global-set-key (kbd "C-s") 'rgrep)
 #+end_src
 ** deafult init
 #+begin_src emacs-lisp
