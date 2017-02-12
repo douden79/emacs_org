@@ -1,0 +1,1 @@
+("~/.emacs.d/" "~/master/spacemacs-master/")
